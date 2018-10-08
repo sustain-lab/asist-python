@@ -14,13 +14,24 @@ class Run():
         self.fan = fan
         self.paddle_amplitude = paddle_amplitude
         self.paddle_frequency = paddle_frequency
+        self.notes = []
+
+    def add_note(self, note: str) -> None:
+        self.notes.append(note)
 
 RunsList = List[Run]
 
 class Experiment():
-    def __init__(self, name: str, runs: RunsList = []) -> None:
+    def __init__(self, name: str, runs: RunsList = None) -> None:
         self.name = name
-        self.runs = runs
+        if not runs:
+            self.runs = []
+        else:
+            self.runs = runs
+        self.notes = []
 
-    def add_run(self, run: Run) -> None:
+    def add_note(self, note: str) -> None:
+        self.notes.append(note)
+
+    def add_run(self, run: type(Run)) -> None:
         self.runs.append(run)
