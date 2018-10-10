@@ -15,7 +15,7 @@ def read_irgason_from_toa5(filenames):
     elif type(filenames) is list:
         data = []
         for filename in filenames:
-            print('Reading ', os.basepath(filename))
+            print('Reading ', os.path.basename(filename))
             data += [line.rstrip() for line in open(filename).readlines()[4:]]
     else:
         raise RuntimeError('filenames must be string or list')
