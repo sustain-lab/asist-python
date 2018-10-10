@@ -3,6 +3,7 @@ irgason.py
 """
 from datetime import datetime, timedelta
 import numpy as np
+import os
 
 def read_irgason_from_toa5(filenames):
     """Reads data from IRGASON output file(s) in TOA5 format.
@@ -14,12 +15,15 @@ def read_irgason_from_toa5(filenames):
     elif type(filenames) is list:
         data = []
         for filename in filenames:
-            print('Reading ', filename)
+            print('Reading ', os.basepath(filename))
             data += [line.rstrip() for line in open(filename).readlines()[4:]]
     else:
         raise RuntimeError('filenames must be string or list')
 
     times, u, v, w, sonic_temperature, cell_temperature, cell_pressure, rh = [], [], [], [], [], [], [], []
+  
+    print('Processing IRGASON time series..')
+
     for line in data:
         line = line.split(',')
         timestr = line[0].replace('"','')
