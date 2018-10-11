@@ -2,12 +2,13 @@
 irgason.py
 """
 from datetime import datetime, timedelta
+from netCDF4 import Dataset
 import numpy as np
 import os
 
 def read_irgason_from_toa5(filenames):
     """Reads data from IRGASON output file(s) in TOA5 format.
-    If filenames is a string, process a single file. If it is 
+    If filenames is a string, process a single file. If it is
     a list of strings, process files in order and concatenate."""
     if type(filenames) is str:
         print('Reading ', filenames)
@@ -21,7 +22,7 @@ def read_irgason_from_toa5(filenames):
         raise RuntimeError('filenames must be string or list')
 
     times, u, v, w, sonic_temperature, cell_temperature, cell_pressure, rh = [], [], [], [], [], [], [], []
-  
+
     print('Processing IRGASON time series..')
 
     for line in data:
@@ -44,3 +45,24 @@ def read_irgason_from_toa5(filenames):
         cell_pressure.append(float(line[35].strip('"')))
         rh.append(float(line[39].strip('"')))
     return np.array(times), np.array(u), np.array(v), np.array(w), np.array(sonic_temperature), np.array(cell_temperature), 10 * np.array(cell_pressure), np.array(rh)
+
+
+def read_irgason_from_netcdf(filename):
+    """Reads IRGASON data from a NetCDF file, created by
+    asist_nsf_2018.process_level1.process_irgason_to_level2()."""
+    data = {}
+    with Dataset(filename, 'r') as nc:
+        seconds = nc.variables['Time'][:]
+        origin = datetime.strptime(nc.variables['Time'].origin, '%Y-%m-%d %H:%M:%S UTC')
+        data['time'] = np.array([origin + timedelta(seconds=seconds[n])\
+                                 for n in range(seconds.size)])
+        data['flag'] = nc.variables['flag'][:]
+        data['fan'] = nc.variables['fan'][:]
+        data['u'] = nc.variables['u'][:]
+        data['v'] = nc.variables['v'][:]
+        data['w'] = nc.variables['w'][:]
+        data['Ts'] = nc.variables['Ts'][:]
+        data['Tc'] = nc.variables['Tc'][:]
+        data['Pc'] = nc.variables['Pc'][:]
+        data['RH'] = nc.variables['RH'][:]
+    return data

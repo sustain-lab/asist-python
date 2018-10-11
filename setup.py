@@ -8,7 +8,7 @@ setup(
     author_email='caomaco@gmail.com',
     url='https://github.com/sustain-lab/asist-python',
     packages=['asist'],
-    install_requires=['numpy', 'pytest'],
+    install_requires=['netCDF4', 'numpy', 'pytest'],
     test_suite='asist.tests',
     license='MIT'
 )
