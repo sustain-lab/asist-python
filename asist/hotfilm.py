@@ -29,9 +29,9 @@ def read_hotfilm_from_lvm(filename, dt=1e-3):
         line = line.split(',')[1:]
         ch1.append(float(line[6]))
         ch2.append(float(line[7]))
-        seconds.append(time)
+        times.append(seconds)
         time += dt
-    return start_time, seconds, ch1, ch2
+    return start_time, times, ch1, ch2
 
 
 def read_hotfilm_from_netcdf(filename):
