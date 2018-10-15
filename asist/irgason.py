@@ -53,7 +53,7 @@ def read_irgason_from_netcdf(filename):
     data = {}
     with Dataset(filename, 'r') as nc:
         seconds = nc.variables['Time'][:]
-        origin = datetime.strptime(nc.variables['Time'].origin, '%Y-%m-%d %H:%M:%S UTC')
+        origin = datetime.strptime(nc.variables['Time'].origin, '%Y-%m-%dT%H:%M:%S')
         data['time'] = np.array([origin + timedelta(seconds=seconds[n])\
                                  for n in range(seconds.size)])
         data['flag'] = nc.variables['flag'][:]

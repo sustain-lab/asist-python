@@ -39,10 +39,8 @@ def read_hotfilm_from_netcdf(filename):
     """Reads 2-channel hotfilm data from a NetCDF file."""
     with Dataset(filename, 'r') as nc:
         seconds = nc.variables['Time'][:]
-        origin = datetime.strptime(nc.variables['Time'].origin, '%Y-%m-%d %H:%M:%S UTC')
-        time = np.array([origin + timedelta(seconds=seconds[n])\
-                                 for n in range(seconds.size)])
+        origin = datetime.strptime(nc.variables['Time'].origin, '%Y-%m-%dT%H:%M:%S')
         fan = nc.variables['fan'][:]
         ch1 = nc.variables['ch1'][:]
         ch2 = nc.variables['ch2'][:]
-    return time, fan, ch1, ch2
+    return origin, seconds, fan, ch1, ch2
