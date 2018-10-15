@@ -13,7 +13,8 @@ def effective_velocity(u, k, theta):
     return np.sqrt(u**2 * (np.cos(theta)**2 + (k * np.sin(theta)**2)))
 
 
-def read_hotfilm(filename):
+def read_hotfilm_from_lvm(filename, dt=0.001):
+    """Reads 2-channel hotfilm data from a Labview text file."""
     times = []
     ch1 = []
     ch2 = []
@@ -29,5 +30,5 @@ def read_hotfilm(filename):
         ch1.append(float(line[6]))
         ch2.append(float(line[7]))
         times.append(time)
-        time += 0.002
+        time += dt
     return start_time, np.array(times), np.array(ch1), np.array(ch2)
