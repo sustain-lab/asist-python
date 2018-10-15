@@ -30,7 +30,7 @@ def read_hotfilm_from_lvm(filename, dt=1e-3):
         ch1.append(float(line[6]))
         ch2.append(float(line[7]))
         times.append(seconds)
-        time += dt
+        seconds += dt
     return start_time, times, ch1, ch2
 
 
