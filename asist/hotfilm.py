@@ -14,10 +14,9 @@ def effective_velocity(u, k, theta):
     return np.sqrt(u**2 * (np.cos(theta)**2 + (k * np.sin(theta)**2)))
 
 
-def hotfilm_velocity(veff1, veff2):
+def hotfilm_velocity(veff1, veff2, k1=0.3, k2=0.3):
     """For a pair effective velocities from wire 1 and 2,
     calculates u and w components."""
-    k1 = k2 = 0.3 # along-wire cooling coefficients for each wire; assume equal
     un = np.sqrt((veff1**2 - k1**2 * veff2**2) / (1 - k1**2 * k2**2))
     ut = np.sqrt((veff2**2 - k2**2 * veff1**2) / (1 - k1**2 * k2**2))
     u = 0.5 * np.sqrt(2.) * (ut + un)
