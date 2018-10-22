@@ -6,11 +6,10 @@ from netCDF4 import Dataset
 import numpy as np
 
 
-def effective_velocity(u, k, theta):
-    """Returns hot film effective velocity, given input
-    wind speed u from a calibrated instrument, along-film
-    cooling factor k, and the angle of wires relative
-    to the flow."""
+def effective_velocity(u, k=0.3, theta=np.pi / 4):
+    """Returns effective velocity, given input wind speed u 
+    from a calibrated instrument, along-film cooling factor k, 
+    and the angle of wires relative to the flow."""
     return np.sqrt(u**2 * (np.cos(theta)**2 + (k * np.sin(theta)**2)))
 
 
