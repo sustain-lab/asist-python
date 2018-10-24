@@ -34,3 +34,13 @@ def read_pressure_from_toa5(filenames):
         dp1.append(float(line[2]))
         dp2.append(float(line[3]))
     return np.array(times), np.array(dp1) * 1e3, np.array(dp2) * 1e3
+
+
+def read_pressure_from_netcdf(filename):
+    """Reads pressure data from a NetCDF file."""
+    with Dataset(filename, 'r') as nc:
+        seconds = nc.variables['Time'][:]
+        origin = datetime.strptime(nc.variables['Time'].origin, '%Y-%m-%dT%H:%M:%S')
+        fan = nc.variables['fan'][:]
+        dp = nc.variables['dp_alongtank'][:]
+    return origin, seconds, fan, dp
