@@ -21,7 +21,7 @@ def read_pressure_from_toa5(filenames):
     else:
         raise RuntimeError('filenames must be string or list')
 
-    dp, times = [], []
+    dp1, dp2, times = [], [], []
     for line in data:
         line = line.split(',')
         t = line[0].replace('"','')
@@ -31,5 +31,6 @@ def read_pressure_from_toa5(filenames):
             time = datetime.strptime(t[:19], '%Y-%m-%d %H:%M:%S')
             time += timedelta(seconds=float(t[-2:]))
         times.append(time)
-        dp.append(float(line[2]))
-    return np.array(times), np.array(dp) * 1e3
+        dp1.append(float(line[2]))
+        dp2.append(float(line[3]))
+    return np.array(times), np.array(dp1) * 1e3, np.array(dp2) * 1e3
