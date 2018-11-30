@@ -26,8 +26,8 @@ def read_irgason_from_toa5(filenames):
     print('Processing IRGASON time series..')
 
     for line in data:
-        line = line.split(',')
-        timestr = line[0].replace('"','')
+        line = line.replace('"', '').split(',')
+        timestr = line[0]
         if len(timestr) == 19:
             time = datetime.strptime(timestr, '%Y-%m-%d %H:%M:%S')
         elif len(timestr) == 21:

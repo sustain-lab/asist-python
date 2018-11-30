@@ -24,8 +24,8 @@ def read_pressure_from_toa5(filenames):
 
     dp1, dp2, times = [], [], []
     for line in data:
-        line = line.split(',')
-        t = line[0].replace('"','')
+        line = line.replace('"', '').split(',')
+        t = line[0]
         if len(t) == 19:
             time = datetime.strptime(t, '%Y-%m-%d %H:%M:%S')
         else:
