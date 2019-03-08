@@ -2,7 +2,7 @@
 asist.utility -- Various utility functions used to process data.
 """
 import numpy as np
-
+from scipy.signal import detrend
 
 def binavg(x, binsize):
     """Simple binned average over binsize elements."""
@@ -39,3 +39,30 @@ def deg2rad(d):
 def running_mean(x, n):
     """Running mean with the window n."""
     return np.convolve(x, np.ones((n,)) / n, mode='same')
+
+def power_spectrum(x, dt):
+    """Power spectrum of x with a sampling interval dt."""
+    N = x.size
+    window = blackman_harris(N)
+    Sx = np.fft.fft(window * detrend(x))[:N//2]
+    df = 2 * np.pi / (dt * N)
+    f = np.array([i * df for i in range(N//2)]) / (2 * np.pi)
+    C = dt / (N * np.pi * np.sum(window**2))
+    Sxx = 2 * np.pi * C * np.abs(Sx)**2
+    return Sxx, f
+
+def cross_spectrum(x, y, dt):
+    """Cross spectrum of x and y with a sampling interval dt."""
+    N = x.size
+    window = blackman_harris(N)
+    Sx = np.fft.fft(window * detrend(x))[:N//2]
+    Sy = np.fft.fft(window * detrend(y))[:N//2]
+    df = 2 * np.pi / (dt * N)
+    f = np.array([i * df for i in range(N//2)]) / (2 * np.pi)
+    C = dt / (N * np.pi * np.sum(window**2))
+    Sxx = 2 * np.pi * C * np.abs(Sx)**2
+    Syy = 2 * np.pi * C * np.abs(Sy)**2
+    Sxy = 2 * np.pi * C * np.conj(Sx) * Sy
+    phase = np.arctan2(-np.imag(Sxy), np.real(Sxy))
+    coherence = np.abs(Sxy / np.sqrt(Sxx * Syy))
+    return Sxx, Syy, Sxy, phase, coherence, f
