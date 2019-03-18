@@ -59,7 +59,7 @@ def cross_spectrum(x, y, dt):
     Sy = np.fft.fft(window * detrend(y))[:N//2]
     df = 2 * np.pi / (dt * N)
     f = np.array([i * df for i in range(N//2)]) / (2 * np.pi)
-    C = dt / (N * np.pi * np.sum(window**2))
+    C = dt / (np.pi * np.sum(window**2))
     Sxx = 2 * np.pi * C * np.abs(Sx)**2
     Syy = 2 * np.pi * C * np.abs(Sy)**2
     Sxy = 2 * np.pi * C * np.conj(Sx) * Sy
