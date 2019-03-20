@@ -49,7 +49,7 @@ def power_spectrum(x, dt):
     f = np.array([i * df for i in range(N//2)]) / (2 * np.pi)
     C = dt / (np.pi * np.sum(window**2))
     Sxx = 2 * np.pi * C * np.abs(Sx)**2
-    return Sxx, f
+    return Sxx, f, df
 
 def cross_spectrum(x, y, dt):
     """Cross spectrum of x and y with a sampling interval dt."""
@@ -65,4 +65,4 @@ def cross_spectrum(x, y, dt):
     Sxy = 2 * np.pi * C * np.conj(Sx) * Sy
     phase = np.arctan2(-np.imag(Sxy), np.real(Sxy))
     coherence = np.abs(Sxy / np.sqrt(Sxx * Syy))
-    return Sxx, Syy, Sxy, phase, coherence, f
+    return Sxx, Syy, Sxy, phase, coherence, f, df
