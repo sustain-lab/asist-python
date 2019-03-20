@@ -47,7 +47,7 @@ def power_spectrum(x, dt):
     Sx = np.fft.fft(window * detrend(x))[:N//2]
     df = 2 * np.pi / (dt * N)
     f = np.array([i * df for i in range(N//2)]) / (2 * np.pi)
-    C = dt / (N * np.pi * np.sum(window**2))
+    C = dt / (np.pi * np.sum(window**2))
     Sxx = 2 * np.pi * C * np.abs(Sx)**2
     return Sxx, f
 
