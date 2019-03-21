@@ -51,7 +51,6 @@ def power_spectrum(x, dt, binsize=1):
     """Power spectrum of x with a sampling interval dt.
     Optionally, average over binsize if provided."""
 
-    assert type(x) is np.ndarray, 'x must be a numpy.ndarray'
     assert dt > 0, 'dt must be > 0'
     assert type(binsize) is int, 'binsize must be an int'
     assert binsize > 0, 'binsize must be > 0'
@@ -77,8 +76,6 @@ def cross_spectrum(x, y, dt, binsize=1):
     """Cross spectrum of x and y with a sampling interval dt.
     Optionally, average over binsize if provided."""
 
-    assert type(x) is np.ndarray, 'x must be a numpy.ndarray'
-    assert type(y) is np.ndarray, 'y must be a numpy.ndarray'
     assert x.size == y.size, 'x and y must have same size'
     assert dt > 0, 'dt must be > 0'
     assert type(binsize) is int, 'binsize must be an int'
