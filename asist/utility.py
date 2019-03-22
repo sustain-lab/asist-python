@@ -65,7 +65,7 @@ def power_spectrum(x, dt, binsize=1):
     if binsize > 1:
         Sxx = 2 * np.pi * C * binavg(np.abs(Sx)**2, binsize)
         f = binavg(f, binsize)
-        df *= binavg
+        df *= binsize
     else:
         Sxx = 2 * np.pi * C * np.abs(Sx)**2
 
@@ -94,7 +94,7 @@ def cross_spectrum(x, y, dt, binsize=1):
         Syy = 2 * np.pi * C * binavg(np.abs(Sy)**2, binsize)
         Sxy = 2 * np.pi * C * binavg(np.conj(Sx) * Sy, binsize)
         f = binavg(f, binsize)
-        df *= binavg
+        df *= binsize
     else:
         Sxx = 2 * np.pi * C * np.abs(Sx)**2
         Syy = 2 * np.pi * C * np.abs(Sy)**2
